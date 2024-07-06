@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_VERTICES 1024
+
+typedef struct Graph {
+    unsigned int num_vertices;
+    unsigned int adjacency_matrix[MAX_VERTICES][MAX_VERTICES];
+} Graph;
+
 // * Backtracking solution
 bool is_safe(unsigned int row, unsigned int col, unsigned int *board, casa *proibido, unsigned int k) {
     for (unsigned int i = 0; i < row; i++) { 
@@ -23,6 +30,7 @@ bool is_safe(unsigned int row, unsigned int col, unsigned int *board, casa *proi
     
     return true;
 }
+
 
 bool solve_nqueens(unsigned int row, unsigned int n, unsigned int *board, casa *proibido, unsigned int k) {
     if (row == n) return true;

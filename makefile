@@ -29,7 +29,6 @@ COMMON_FLAGS = -pipe \
 
 CFLAGS  = $(COMMON_FLAGS) \
           -std=c99 \
-					-O3 \
 	  -Wbad-function-cast \
 	  -Wmissing-prototypes \
 	  -Wnested-externs \

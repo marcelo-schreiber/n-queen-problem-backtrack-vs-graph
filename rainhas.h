@@ -10,13 +10,6 @@ typedef struct casa {
   unsigned int linha, coluna;
 } casa;
 
-
-#define MAX_VERTICES 1024
-
-typedef struct Graph {
-    unsigned int num_vertices;
-    unsigned int adjacency_matrix[MAX_VERTICES][MAX_VERTICES];
-} Graph;
 //------------------------------------------------------------------------------
 // computa uma resposta para a instância (n,c) do problema das n rainhas 
 // com casas proibidas usando backtracking
@@ -40,15 +33,5 @@ unsigned int *rainhas_bt(unsigned int n, unsigned int k, casa *c, unsigned int *
 // n, c, r e o valor de retorno são como em rainhas_bt
 
 unsigned int *rainhas_ci(unsigned int n, unsigned int k, casa *c, unsigned int *r);
-void initialize_nqueens_graph(Graph *g, unsigned int n, casa *c, unsigned int k);
-
-bool is_safe(unsigned int row, unsigned int col, unsigned int *board, casa *proibido, unsigned int k);
-bool solve_nqueens(unsigned int row, unsigned int n, unsigned int *board, casa *proibido, unsigned int k);
-void initialize_graph(Graph *g, unsigned int num_vertices);
-unsigned int position_to_vertex(unsigned int row, unsigned int col, unsigned int n);
-int find_independent_set(Graph *g, unsigned int n, unsigned int *result);
-void add_edge(Graph *g, unsigned int src, unsigned int dest);
-int is_independent(Graph *g, unsigned int *I, unsigned int I_size, unsigned int v);
-int ConjIndep(Graph *g, unsigned int *I, unsigned int I_size, unsigned int *C, unsigned int C_size, unsigned int n, unsigned int *result);
 
 #endif
