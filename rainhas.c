@@ -68,13 +68,11 @@ void initialize_graph(Graph *g, unsigned int num_vertices) {
     g->num_vertices = num_vertices;
 }
 
-// Function to add an edge to the graph
 void add_edge(Graph *g, unsigned int src, unsigned int dest) {
     g->adjacency_matrix[src][dest] = 1;
     g->adjacency_matrix[dest][src] = 1;
 }
 
-// Function to check if a vertex can be added to the independent set
 int is_independent(Graph *g, unsigned int *I, unsigned int I_size, unsigned int v) {
     for (unsigned int i = 0; i < I_size; i++) {
         if (g->adjacency_matrix[I[i]][v]) {
@@ -84,12 +82,9 @@ int is_independent(Graph *g, unsigned int *I, unsigned int I_size, unsigned int 
     return 1;
 }
 
-// Backtracking function to find an independent set
 int ConjIndep(Graph *g, unsigned int *I, unsigned int I_size, unsigned int *C, unsigned int C_size, unsigned int n, unsigned int *result) {
     if (I_size == n) {
-        for (unsigned int i = 0; i < n; i++) {
-            result[i] = I[i];
-        }
+        memcpy(result, I, n * sizeof(unsigned int));
         return 1;
     }
 
