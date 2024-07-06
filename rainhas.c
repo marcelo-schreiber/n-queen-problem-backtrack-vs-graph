@@ -4,16 +4,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+// * Backtracking solution
 bool is_safe(unsigned int row, unsigned int col, unsigned int *board, casa *proibido, unsigned int k) {
-    for (unsigned int i = 0; i < row; i++) { // Check all previous rows
-        // Check column conflict
+    for (unsigned int i = 0; i < row; i++) { 
+        // column
         if (board[i] == col) return false;
 
-        // Check diagonal conflicts
+        // diagonal 
         if (abs((int)(board[i] - col)) == (int)(row - i)) return false;
     }
     
-    // Check prohibited positions
+    // prohibited positions
     for (unsigned int i = 0; i < k; i++) {
         if (proibido[i].linha == row + 1 && proibido[i].coluna == col + 1) {
             return false;
@@ -23,21 +24,26 @@ bool is_safe(unsigned int row, unsigned int col, unsigned int *board, casa *proi
     return true;
 }
 
-// Recursive backtracking function
 bool solve_nqueens(unsigned int row, unsigned int n, unsigned int *board, casa *proibido, unsigned int k) {
-    if (row == n) return true; // All queens placed successfully
+    if (row == n) return true;
 
     for (unsigned int col = 1; col <= n; col++) {
         if (is_safe(row, col, board, proibido, k)) {
             board[row] = col;
             if (solve_nqueens(row + 1, n, board, proibido, k)) return true;
-            board[row] = 0; // Backtrack
+            board[row] = 0; // backtrack
         }
     }
 
     return false;
 }
 
+//------------------------------------------------------------------------------
+// computa uma resposta para a instância (n,c) do problema das n
+// rainhas com casas proibidas usando a modelagem do problema como
+// conjunto independente de um grafo
+//
+// n, c e r são como em rainhas_bt()
 unsigned int *rainhas_bt(unsigned int n, unsigned int k, casa *c, unsigned int *r) {
     if (solve_nqueens(0, n, r, c, k)) {
         return r;
@@ -48,17 +54,10 @@ unsigned int *rainhas_bt(unsigned int n, unsigned int k, casa *c, unsigned int *
         return r;
     }
 }
-//------------------------------------------------------------------------------
-// computa uma resposta para a instância (n,c) do problema das n
-// rainhas com casas proibidas usando a modelagem do problema como
-// conjunto independente de um grafo
-//
-// n, c e r são como em rainhas_bt()
 
-// Function to initialize a graph
+// * Graph solution
 void initialize_graph(Graph *g, unsigned int num_vertices) {
     g->num_vertices = num_vertices;
-    memset(g->adjacency_matrix, 0, sizeof(g->adjacency_matrix));
 }
 
 // Function to add an edge to the graph
@@ -128,16 +127,6 @@ int find_independent_set(Graph *g, unsigned int n, unsigned int *result) {
 // Function to convert 2D board position to graph vertex index
 unsigned int position_to_vertex(unsigned int row, unsigned int col, unsigned int n) {
     return row * n + col;
-}
-
-void print_graph(Graph *g) {
-            printf("\n");
-    for (unsigned int i = 0; i < g->num_vertices; i++) {
-        for (unsigned int j = 0; j < g->num_vertices; j++) {
-            printf("%d ", g->adjacency_matrix[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 // Function to initialize the graph for the N-Queens problem
